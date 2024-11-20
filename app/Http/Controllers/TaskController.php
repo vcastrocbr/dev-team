@@ -12,15 +12,15 @@ class TaskController extends Controller
     // Show all Tasks
     public function index()
     {
-        return view('tasks.index', [
-            'tasks' => Task::latest()->paginate(6)
+        return view('task.index', [
+            'tasks' => Task::latest()->paginate(10)
         ]);
     }
 
     //Show single Task
     public function show(Task $task)
     {
-        return view('tasks.show', [
+        return view('task.show', [
             'task' => $task
         ]);
     }
@@ -28,7 +28,7 @@ class TaskController extends Controller
     // Show Create Form
     public function create()
     {
-        return view('tasks.create');
+        return view('task.create');
     }
 
 
@@ -53,7 +53,7 @@ class TaskController extends Controller
     // Show Edit Form
     public function edit(Task $task)
     {
-        return view('tasks.edit', ['task' => $task]);
+        return view('task.edit', ['task' => $task]);
     }
 
     // Update Task Data
