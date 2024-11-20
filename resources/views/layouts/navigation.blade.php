@@ -42,7 +42,7 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('tasks.edit')">
+                        <x-dropdown-link :href="route('tasks.index')">
                             {{ __('Tasks') }}
                         </x-dropdown-link>
 
