@@ -1,7 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LanguageController;
+
+// Language switch route
+Route::get('lang/{locale}', [LanguageController::class, 'setLocale'])->middleware(SetLocale::class)->name('lang.switch');
 
 Route::get('/', function () {
     return view('welcome');
