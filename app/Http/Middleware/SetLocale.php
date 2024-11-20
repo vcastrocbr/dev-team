@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +18,8 @@ class SetLocale
     public function handle(Request $request, Closure $next): Response
     {
         // Set the locale from the session or fallback to the default
-        $locale = session('locale', config('app.locale'));
-        App::setLocale($locale);
+        app()->setLocale(session('locale', config('app.locale')));
+        Carbon::setLocale(session('locale', config('app.locale')));
         return $next($request);
     }
 }
