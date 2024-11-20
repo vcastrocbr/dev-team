@@ -17,16 +17,28 @@
                 </div>
             </div>
 
-            <div class="flex gap-4">
-                <!-- Edit button links to the edit form for this task -->
-                <a href="{{ route('tasks.edit', $task->id) }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Edit Task</a>
+            @if (Auth::check() && Auth::user()->id === $task->creator_id)
+                <!-- Check if the logged-in user is the creator -->
+                <div class="flex gap-4 mt-6">
+                    <!-- Edit button links to the edit form for this task -->
+                    <a href="{{ route('tasks.edit', $task->id) }}"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Edit Task</a>
 
-                <!-- Delete form -->
-                <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Delete Task</button>
-                </form>
+                    <!-- Delete form -->
+                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this task?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Delete Task</button>
+                    </form>
+                </div>
+            @endif
+              <!-- Back Button -->
+              <div class="mt-4 flex justify-center">
+                <a href="{{ route('tasks.index') }}" class="inline-block bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                    {{ __('Back to Tasks List') }}
+                </a>
             </div>
         </div>
     </div>
