@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TaskStoreRequest;
 
 class TaskController extends Controller
 {
@@ -33,18 +34,13 @@ class TaskController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(TaskStoreRequest $request)
     {
-        $formFields = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'priority' => 'required|in:low,medium,high',
-        ]);
-
-
+        // Merge the authenticated user's ID as creator_id into the request data
+        $formFields = $request->validated();
         $formFields['creator_id'] = Auth::id();
 
+        // Create the task with the merged data
         Task::create($formFields);
 
         return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
@@ -57,20 +53,9 @@ class TaskController extends Controller
     }
 
     // Update Task Data
-    public function update(Request $request, Task $task)
+    public function update(TaskStoreRequest $request, Task $task)
     {
-        // Ensure the user can update this task
-        if ($task->creator_id !== Auth::id()) {
-            abort(403, 'Unauthorized Action');
-        }
-
-        $formFields = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'priority' => 'required|in:low,medium,high',
-        ]);
-
+        $formFields = $request->validated();
         $task->update($formFields);
 
         // Redirect to the tasks.index route with a success message
@@ -81,11 +66,6 @@ class TaskController extends Controller
     // Delete Task
     public function destroy(Task $task)
     {
-        // Ensure the user can delete this task
-        if ($task->creator_id !== Auth::id()) {
-            abort(403, 'Unauthorized Action');
-        }
-
         $task->delete();
 
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');

@@ -25,7 +25,7 @@ class TaskFactory extends Factory
             'creator_id' => User::inRandomOrder()->first()->id,
             'title' => $this->faker->sentence(4), 
             'description' => $this->faker->paragraph(),
-            'start_date' => $this->faker->date(),
+            'start_date' => $this->faker->dateTimeBetween('now', '+2 years')->format('Y-m-d'),
             'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
         ];
     }
