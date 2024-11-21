@@ -30,6 +30,7 @@ class TaskStoreRequest extends FormRequest
             'description' => 'nullable|string',
             'start_date' => 'required|date|after_or_equal:today',
             'priority' => 'required|in:low,medium,high',
+            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

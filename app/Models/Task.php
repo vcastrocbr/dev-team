@@ -17,7 +17,8 @@ class Task extends Model
         'description',
         'creator_id',
         'start_date',
-        'priority'
+        'priority',
+        'picture'
     ];
 
     /**

@@ -16,6 +16,10 @@
                     <p> {{ $task->start_date }}</p>
                     <p class="mt-2">Priority:</p>
                     <p>{{ ucfirst($task->priority) }}</p>
+                    <p class="mt-2">Picture:</p>
+                    <img class="w-48"
+                    src="{{ $task->picture ? asset('storage/' . $task->picture) : asset('/images/gradient-bg1.png') }}"
+                    alt="Task Picture" />
                 </div>
             </div>
 

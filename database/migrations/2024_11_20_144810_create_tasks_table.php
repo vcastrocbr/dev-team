@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('start_date');
             $table->enum('priority', ['low', 'medium', 'high'])->default('low');
+            $table->string('picture')->nullable();
             $table->timestamps();
         });
     }

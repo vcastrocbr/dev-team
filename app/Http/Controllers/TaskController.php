@@ -40,6 +40,18 @@ class TaskController extends Controller
         $formFields = $request->validated();
         $formFields['creator_id'] = Auth::id();
 
+        // Handle the picture upload if a file is provided
+    if ($request->hasFile('picture')) {
+        // Get the uploaded picture file
+        $picture = $request->file('picture');
+
+        // Generate a unique file name (you can customize this)
+        $picturePath = $picture->store('pictures', 'public'); // Store it in the 'public' disk, inside 'pictures' directory
+
+        // Add the file path to the form data
+        $formFields['picture'] = $picturePath;
+    }
+
         // Create the task with the merged data
         Task::create($formFields);
 
