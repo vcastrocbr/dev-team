@@ -9,8 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
-                    <h3 class="text-lg font-medium text-gray-900">{{ __('Edit: ') }} {{ $task->title }}</h3>
-
+                    
                     <form action="{{ route('tasks.update', $task->id) }}" method="POST" class="mt-6 space-y-6">
                         @csrf
                         @method('PUT')

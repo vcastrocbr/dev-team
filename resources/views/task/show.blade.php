@@ -9,20 +9,22 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+                <div class="max-w-xl text-gray-600">
                     <h3 class="text-lg font-medium text-gray-900">{{ $task->title }}</h3>
-                    <p class="mt-2 text-gray-600">{{ $task->description ?? 'No description available.' }}</p>
-                    <p class="mt-2 text-gray-600">Start Date: {{ $task->start_date }}</p>
-                    <p class="mt-2 text-gray-600">Priority: {{ ucfirst($task->priority) }}</p>
+                    <p class="mt-2">{{ $task->description ?? 'No description available.' }}</p>
+                    <p class="mt-2">Start Date:</p>
+                    <p> {{ $task->start_date }}</p>
+                    <p class="mt-2">Priority:</p>
+                    <p>{{ ucfirst($task->priority) }}</p>
                 </div>
             </div>
 
+            <!-- Check if the logged-in user is the creator -->
             @if (Auth::check() && Auth::user()->id === $task->creator_id)
-                <!-- Check if the logged-in user is the creator -->
                 <div class="flex gap-4 mt-6">
                     <!-- Edit button links to the edit form for this task -->
                     <a href="{{ route('tasks.edit', $task->id) }}"
-                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Edit Task</a>
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Edit Task</a>
 
                     <!-- Delete form -->
                     <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
@@ -30,13 +32,14 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">Delete Task</button>
+                            class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">Delete Task</button>
                     </form>
                 </div>
             @endif
-              <!-- Back Button -->
-              <div class="mt-4 flex justify-center">
-                <a href="{{ route('tasks.index') }}" class="inline-block bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+            <!-- Back Button -->
+            <div class="mt-4 flex justify-center">
+                <a href="{{ route('tasks.index') }}"
+                    class="inline-block bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700">
                     {{ __('Back to Tasks List') }}
                 </a>
             </div>
