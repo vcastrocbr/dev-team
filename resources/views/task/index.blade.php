@@ -8,12 +8,17 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Button to Create New Task -->
-            <div class="flex justify-end">
+            <div class="flex justify-between items-center">
+                <div class="w-1/4">
+                    <x-flash-message />
+                </div>
                 <a href="{{ route('tasks.create') }}"
                     class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
                     {{ __('Create New Task') }}
                 </a>
             </div>
+           
+            
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <h3 class="text-lg font-medium text-gray-900">{{ __('Task List') }}</h3>

@@ -73,8 +73,10 @@ class TaskController extends Controller
 
         $task->update($formFields);
 
-        return back()->with('message', 'Task updated successfully!');
+        // Redirect to the tasks.index route with a success message
+        return redirect()->route('tasks.index')->with('success', 'Task updated successfully!');
     }
+
 
     // Delete Task
     public function destroy(Task $task)
@@ -86,6 +88,6 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect('/')->with('message', 'Task deleted successfully');
+        return redirect('/')->with('success', 'Task deleted successfully');
     }
 }
