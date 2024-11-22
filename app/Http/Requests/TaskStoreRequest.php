@@ -14,8 +14,12 @@ class TaskStoreRequest extends FormRequest
     {
         // Get the task from the route parameter
         $task = $this->route('task');
-        // Check if the current authenticated user is the creator of the task
-        return $task && $task->creator_id === Auth::id();
+        // If there's no task, assume this is a create operation and authorize the user
+        if (!$task) {
+            return true;
+        }
+        // Otherwise, ensure the user is the creator of the task
+        return $task->creator_id === Auth::id();
     }
 
     /**
