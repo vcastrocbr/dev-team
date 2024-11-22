@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <a href="{{ route('tasks.index') }}">
-                        {{ __('You have ') . Auth::user()->tasks()->count() . __(' tasks.') }}
+                        {{ trans_choice('pagination.task_count', Auth::user()->tasks()->count(), ['count' => Auth::user()->tasks()->count()]) }}
                     </a>
                 </div>
             </div>

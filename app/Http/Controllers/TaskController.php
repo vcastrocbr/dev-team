@@ -14,8 +14,22 @@ class TaskController extends Controller
     // Show all Tasks
     public function index()
     {
+        $userTasks = Task::where('creator_id', auth()->id())
+        ->orderByRaw("
+            CASE
+                WHEN priority = 'high' THEN 1
+                WHEN priority = 'medium' THEN 2
+                WHEN priority = 'low' THEN 3
+                ELSE 4
+            END
+        ")
+        ->paginate(10);
+    
+        $allTasks = Task::latest()->paginate(10);
+
         return view('task.index', [
-            'tasks' => Task::latest()->paginate(10)
+            'userTasks' => $userTasks,
+            'allTasks' => $allTasks
         ]);
     }
 
@@ -90,7 +104,7 @@ class TaskController extends Controller
         $task->update($formFields);
 
         // Create the dynamic success message with task title (limited to 20 chars)
-        $successMessage = 'Task ' . substr($task->title, 0, 20) . ' updated successfully!';
+        $successMessage = 'Task: ' . substr($task->title, 0, 20) . ' updated successfully!';
 
         // Redirect to the tasks.index route with a success message
         return redirect()->route('tasks.index')->with('success', $successMessage);

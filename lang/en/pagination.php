@@ -15,5 +15,6 @@ return [
 
     'previous' => '&laquo; Previous',
     'next' => 'Next &raquo;',
+    'task_count' => '{0} You have no tasks.|{1} You have :count task.|[2,*] You have :count tasks.',
 
 ];
