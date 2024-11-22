@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\DashboardController;
 
 // Language switch route
 Route::get('lang/{locale}', [LanguageController::class, 'setLocale'])->middleware(SetLocale::class)->name('lang.switch');
@@ -15,9 +16,9 @@ Route::get('/', function () {
 });
 
 // Dashboard page
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Group authenticated routes
 Route::middleware('auth')->group(function () {

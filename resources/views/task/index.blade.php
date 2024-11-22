@@ -5,62 +5,30 @@
         </h2>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <div class="py-8" x-data="{ viewType: 'cards' }">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
             <!-- Button to Create New Task -->
             <div class="flex justify-between items-center">
                 <div class="w-1/4">
                     <x-flash-message />
                 </div>
-                <a href="{{ route('tasks.create') }}"
-                    class="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                <x-primary-button :href="route('tasks.create')">
                     {{ __('Create New Task') }}
-                </a>
+                </x-primary-button>
             </div>
-            <!-- Content -->
+
+            <!-- Secondary Button toggle between cards and table view -->
+            <div class="flex justify-end">
+                <x-secondary-button @click="viewType = (viewType === 'cards' ? 'table' : 'cards')">
+                    <span x-text="viewType === 'cards' ? 'Table' : 'Cards'"></span>
+                </x-secondary-button>
+            </div>
+
+            <!-- Content Section -->
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="flex justify-center">
-                    <div class="w-full max-w-3xl">
-
-                        <!-- Table for My Tasks -->
-                        <h3 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('My Tasks') }}
-                        </h3>
-                        <table class="min-w-full mt-4 table-auto">
-                            <!-- Table Header -->
-                            <thead>
-                                <tr class="bg-gray-100">
-                                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                                        {{ __('Task Title') }}</th>
-                                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                                        {{ __('Priority') }} </th>
-                                    <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                                        {{ __('Start Date') }} </th>
-                                </tr>
-                            </thead>
-                            <!-- Table Body -->
-                            <tbody>
-                                @foreach ($userTasks as $task)
-                                    <tr class="border-t">
-                                        <td class="px-4 py-2 text-sm text-gray-900">
-                                            <a href="{{ route('tasks.show', $task->id) }}"
-                                                class="text-blue-600 hover:underline">{{ $task->title }}</a>
-                                        </td>
-                                        <td class="px-4 py-2 text-sm text-gray-500">
-                                            {{ ucfirst($task->priority) }}
-                                        </td>
-                                        <td class="px-4 py-2 text-sm text-gray-500">
-                                            {{ $task->start_date }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <!-- Pagination -->
-                        <div class="mt-4">
-                            {{ $userTasks->links() }} <!-- Pagination links -->
-                        </div>
-
+                <!-- Conditional rendering based on viewType -->
+                <template x-if="viewType === 'table'">
+                    <div>
                         <!-- Table for All Tasks List -->
                         <h3 class="mt-4 font-semibold text-xl text-gray-800 leading-tight">
                             {{ __('All Tasks') }}
@@ -70,11 +38,14 @@
                             <thead>
                                 <tr class="bg-gray-100">
                                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                                        {{ __('Task Title') }}</th>
+                                        {{ __('Task Title') }}
+                                    </th>
                                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                                        {{ __('Priority') }} </th>
+                                        {{ __('Priority') }}
+                                    </th>
                                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-                                        {{ __('Start Date') }} </th>
+                                        {{ __('Start Date') }}
+                                    </th>
                                 </tr>
                             </thead>
                             <!-- Table Body -->
@@ -95,12 +66,27 @@
                                 @endforeach
                             </tbody>
                         </table>
+
                         <!-- Pagination -->
                         <div class="mt-4">
-                            {{ $allTasks->links() }} <!-- Pagination links -->
+                            {{ $allTasks->links() }}
                         </div>
                     </div>
-                </div>
+                </template>
+
+                <template x-if="viewType === 'cards'">
+                    <div>
+                        <!-- Cards View -->
+                        <h3 class="mt-4 font-semibold text-xl text-gray-800 leading-tight">
+                            {{ __('All Tasks - Cards') }}
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+                            @foreach ($allTasks as $task)
+                                <x-task-card :task="$task" />
+                            @endforeach
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
     </div>
