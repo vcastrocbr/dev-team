@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TaskStoreRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
 
     // Show all Tasks
-    public function index()
+    public function index(Request $request)
     {
-        $allTasks = Task::latest()->paginate(9);
-
+        $viewType = $request->query('viewType', 'cards'); // Default to 'cards'
+        $allTasks = Task::orderBy('start_date', 'asc')->paginate(9);
+    
         return view('task.index', [
-            'allTasks' => $allTasks
+            'allTasks' => $allTasks,
+            'viewType' => $viewType,
         ]);
     }
 

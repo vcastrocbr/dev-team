@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-8" x-data="{ viewType: 'cards' }">
+    <div class="py-8" x-data="{ viewType: '{{ $viewType }}' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
             <!-- Button to Create New Task -->
             <div class="flex justify-between items-center">
@@ -84,6 +84,10 @@
                             @foreach ($allTasks as $task)
                                 <x-task-card :task="$task" />
                             @endforeach
+                        </div>
+                         <!-- Pagination -->
+                         <div class="mt-4">
+                            {{ $allTasks->links() }}
                         </div>
                     </div>
                 </template>
