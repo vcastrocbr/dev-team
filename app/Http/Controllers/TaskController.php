@@ -18,7 +18,7 @@ class TaskController extends Controller
         $viewType = $request->query('viewType', 'cards');
         $allTasks = Task::orderBy('start_date', 'asc')->paginate(9);
 
-        return view('task.index', [
+        return view('pages.task.index', [
             'allTasks' => $allTasks,
             'viewType' => $viewType,
         ]);
@@ -27,7 +27,7 @@ class TaskController extends Controller
     //Show single Task
     public function show(Task $task)
     {
-        return view('task.show', [
+        return view('pages.task.show', [
             'task' => $task
         ]);
     }
@@ -35,7 +35,7 @@ class TaskController extends Controller
     // Show Create Form
     public function create()
     {
-        return view('task.create');
+        return view('pages.task.create');
     }
 
     public function store(TaskStoreRequest $request)
@@ -58,7 +58,7 @@ class TaskController extends Controller
         try {
             // Create the task entry in the database
             Task::create($formFields);
-            return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
+            return redirect()->route('pages.tasks.index')->with('success', 'Task created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating task: ' . $e->getMessage(), ['exception' => $e]);
             return back()->withErrors(['error' => 'An error occurred while creating the task.']);
@@ -68,7 +68,7 @@ class TaskController extends Controller
     // Show Edit Form
     public function edit(Task $task)
     {
-        return view('task.edit', ['task' => $task]);
+        return view('pages.task.edit', ['task' => $task]);
     }
 
     // Update Task Data
@@ -98,7 +98,7 @@ class TaskController extends Controller
         $successMessage = 'Task: ' . substr($task->title, 0, 20) . ' updated successfully!';
 
         // Redirect to the tasks.index route with a success message
-        return redirect()->route('tasks.index')->with('success', $successMessage);
+        return redirect()->route('pages.tasks.index')->with('success', $successMessage);
     }
 
     // Delete Task
@@ -114,6 +114,6 @@ class TaskController extends Controller
         }
         $task->delete();
 
-        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
+        return redirect()->route('pages.tasks.index')->with('success', 'Task deleted successfully');
     }
 }

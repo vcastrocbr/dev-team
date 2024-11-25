@@ -46,6 +46,10 @@
                             {{ __('Tasks') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('musics.index')">
+                            {{ __('Musics') }}
+                        </x-dropdown-link>
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

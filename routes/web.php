@@ -3,6 +3,7 @@
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\MusicController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\DashboardController;
@@ -35,6 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update'); // Update task
     Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy'); // Delete task
     Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show'); // Show single task
+
+    // Music routes
+    Route::get('/musics', [MusicController::class, 'index'])->name('musics.index'); // List all musics
+    Route::get('/musics/create', [MusicController::class, 'create'])->name('musics.create'); // Show create form
+    Route::post('/musics', [MusicController::class, 'store'])->name('musics.store'); // Store new music
+    Route::get('/musics/{music}/edit', [MusicController::class, 'edit'])->name('musics.edit'); // Show edit form
+    Route::put('/musics/{music}', [MusicController::class, 'update'])->name('musics.update'); // Update music
+    Route::delete('/musics/{music}', [MusicController::class, 'destroy'])->name('musics.destroy'); // Delete music
+    Route::get('/musics/{music}', [MusicController::class, 'show'])->name('musics.show'); // Show single music
+
 });
 
 require __DIR__ . '/auth.php';
