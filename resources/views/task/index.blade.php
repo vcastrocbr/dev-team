@@ -19,7 +19,14 @@
 
             <!-- Secondary Button toggle between cards and table view -->
             <div class="flex justify-end">
-                <x-secondary-button @click="viewType = (viewType === 'cards' ? 'table' : 'cards')">
+                <x-secondary-button
+                    @click="
+                viewType = (viewType === 'cards' ? 'table' : 'cards');
+                const url = new URL(window.location.href);
+                url.searchParams.set('viewType', viewType);
+                window.history.pushState({}, '', url);
+                document.location.reload();
+            ">
                     <span x-text="viewType === 'cards' ? 'Table' : 'Cards'"></span>
                 </x-secondary-button>
             </div>
@@ -69,7 +76,7 @@
 
                         <!-- Pagination -->
                         <div class="mt-4">
-                            {{ $allTasks->links() }}
+                            {{ $allTasks->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </template>
@@ -85,9 +92,9 @@
                                 <x-task-card :task="$task" />
                             @endforeach
                         </div>
-                         <!-- Pagination -->
-                         <div class="mt-4">
-                            {{ $allTasks->links() }}
+                        <!-- Pagination -->
+                        <div class="mt-4">
+                            {{ $allTasks->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </template>

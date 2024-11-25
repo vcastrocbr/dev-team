@@ -15,9 +15,9 @@ class TaskController extends Controller
     // Show all Tasks
     public function index(Request $request)
     {
-        $viewType = $request->query('viewType', 'cards'); // Default to 'cards'
+        $viewType = $request->query('viewType', 'cards');
         $allTasks = Task::orderBy('start_date', 'asc')->paginate(9);
-    
+
         return view('task.index', [
             'allTasks' => $allTasks,
             'viewType' => $viewType,
