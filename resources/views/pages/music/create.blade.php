@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12" x-init="loadTagManager()">
+    <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
@@ -58,9 +58,9 @@
                         <div class="p-4 border border-gray-300 rounded-lg">
                             <div>
                                 <x-input-label for="tags" :value="__('Tags')" />
-                                <div class="grid grid-cols-2 gap-4 mt-2">
+                                <div class="grid grid-cols-2 gap-4 mt-2 mx-2 px-2 py-2 overflow-y-auto max-h-32">
                                     @foreach ($tags as $tag)
-                                        <div class="flex items-center">
+                                        <div class="flex items-center relative">
                                             <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
                                                 id="tag-{{ $tag->id }}"
                                                 class="rounded border-gray-300 text-gray-800 shadow-sm focus:ring-gray-500"
@@ -68,6 +68,9 @@
                                             <label for="tag-{{ $tag->id }}" class="ml-2 text-sm text-gray-600">
                                                 {{ $tag->name }}
                                             </label>
+                                            <button class="delete-tag ml-2 text-gray-600">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </div>
                                     @endforeach
                                 </div>

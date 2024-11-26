@@ -34,4 +34,11 @@ class TagController extends Controller
         // Return the new tag as JSON
         return response()->json($tag);
     }
+
+    public function destroy(Tag $tag)
+    {
+        $tag->delete();
+
+        return response()->json(['message' => 'Tag deleted successfully']);
+    }
 }
