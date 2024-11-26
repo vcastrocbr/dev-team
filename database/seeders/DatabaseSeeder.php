@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
 
         Task::factory(20)->create();
 
-        $tagNames = ['new', 'old', 'best', 'high', 'low'];
+        $tagNames = ['New', 'Old', 'Best', 'High', 'Low'];
         foreach ($tagNames as $name) {
             Tag::create(['name' => $name]);
         }

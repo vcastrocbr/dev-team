@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12" x-init="loadTagManager()">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
@@ -31,13 +31,14 @@
                             <x-input-error class="mt-2" :messages="$errors->get('artist')" />
                         </div>
 
-                        <!-- Genre -->                        
+                        <!-- Genre -->
                         <div>
                             <x-input-label for="genre" :value="__('Genre')" />
-                            <select id="genre" name="genre" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                            <select id="genre" name="genre"
+                                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                required>
                                 @foreach ($genres as $value => $label)
-                                    <option value="{{ $value }}" 
-                                    {{ old('genre') == $value ? 'selected' : '' }}>
+                                    <option value="{{ $value }}" {{ old('genre') == $value ? 'selected' : '' }}>
                                         {{ $label }}
                                     </option>
                                 @endforeach
@@ -54,22 +55,37 @@
                         </div>
 
                         <!-- Tags -->
-                        <div>
-                            <x-input-label for="tags" :value="__('Tags')" />
-                            <div class="grid grid-cols-2 gap-4 mt-2">
-                                @foreach ($tags as $tag)
-                                    <div class="flex items-center">
-                                        <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
-                                            id="tag-{{ $tag->id }}"
-                                            class="rounded border-gray-300 text-gray-800 shadow-sm focus:ring-gray-500"
-                                            {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
-                                        <label for="tag-{{ $tag->id }}" class="ml-2 text-sm text-gray-600">
-                                            {{ $tag->name }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                        <div class="p-4 border border-gray-300 rounded-lg">
+                            <div>
+                                <x-input-label for="tags" :value="__('Tags')" />
+                                <div class="grid grid-cols-2 gap-4 mt-2">
+                                    @foreach ($tags as $tag)
+                                        <div class="flex items-center">
+                                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}"
+                                                id="tag-{{ $tag->id }}"
+                                                class="rounded border-gray-300 text-gray-800 shadow-sm focus:ring-gray-500"
+                                                {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                            <label for="tag-{{ $tag->id }}" class="ml-2 text-sm text-gray-600">
+                                                {{ $tag->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <x-input-error class="mt-2" :messages="$errors->get('tags')" />
                             </div>
-                            <x-input-error class="mt-2" :messages="$errors->get('tags')" />
+                            <!-- Add Tag -->
+                            <div class="mt-6">
+                                <x-input-label for="create_tag" :value="__('Create Tag')" />
+                                <div class="flex items-center gap-4 mt-1">
+                                    <x-text-input id="create_tag" name="create_tag" type="text"
+                                        class="mt-1 block w-2/3" :value="old('create_tag')" required />
+                                    <button id="addTagButton" type="button"
+                                        class="border border-gray-300 px-4 py-2 mt-1 w-1/3 hover:bg-gray-200 focus:border-gray-500 focus:ring-gray-500 rounded-md shadow-sm">
+                                        {{ __('Add Tag') }}
+                                    </button>
+                                </div>
+                                <x-input-error class="mt-2" :messages="$errors->get('create_tag')" />
+                            </div>
                         </div>
 
                         <!-- Submit Button -->
@@ -82,4 +98,11 @@
             </div>
         </div>
     </div>
+
+
+
+    <!-- Push the tag-manager.js script -->
+    @push('scripts')
+        @vite('resources/js/tag-manager.js')
+    @endpush
 </x-app-layout>

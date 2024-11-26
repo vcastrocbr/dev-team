@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\ProfileController;
@@ -38,13 +39,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show'); // Show single task
 
     // Music routes
-    Route::get('/musics', [MusicController::class, 'index'])->name('musics.index'); // List all musics
-    Route::get('/musics/create', [MusicController::class, 'create'])->name('musics.create'); // Show create form
-    Route::post('/musics', [MusicController::class, 'store'])->name('musics.store'); // Store new music
-    Route::get('/musics/{music}/edit', [MusicController::class, 'edit'])->name('musics.edit'); // Show edit form
-    Route::put('/musics/{music}', [MusicController::class, 'update'])->name('musics.update'); // Update music
-    Route::delete('/musics/{music}', [MusicController::class, 'destroy'])->name('musics.destroy'); // Delete music
-    Route::get('/musics/{music}', [MusicController::class, 'show'])->name('musics.show'); // Show single music
+    Route::get('/music', [MusicController::class, 'index'])->name('musics.index'); // List all musics
+    Route::get('/music/create', [MusicController::class, 'create'])->name('musics.create'); // Show create form
+    Route::post('/music', [MusicController::class, 'store'])->name('musics.store'); // Store new music
+    Route::get('/music/{music}/edit', [MusicController::class, 'edit'])->name('musics.edit'); // Show edit form
+    Route::put('/music/{music}', [MusicController::class, 'update'])->name('musics.update'); // Update music
+    Route::delete('/music/{music}', [MusicController::class, 'destroy'])->name('musics.destroy'); // Delete music
+    Route::get('/music/{music}', [MusicController::class, 'show'])->name('musics.show'); // Show single music
+
+    // Tag routes
+    Route::post('/tags', [TagController::class, 'store'])->name('tags.store');
+
 
 });
 
