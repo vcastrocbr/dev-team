@@ -68,7 +68,8 @@
 
                         <div class="flex items-center gap-4">
                             <x-primary-button>{{ __('Save') }}</x-primary-button>
-                        </div>
+                            <x-secondary-button :href="route('tasks.show', $task->id)">{{ __('Cancel') }}</x-secondary-button>
+                        </div>                        
                     </form>
                 </div>
             </div>

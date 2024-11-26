@@ -1,7 +1,9 @@
 @props(['task'])
 
-<div class="flex flex-col bg-white shadow-sm sm:rounded-lg p-6 text-gray-900 space-y-4 p-4 bg-white/5 rounded-xl border border-transparent hover:border-blue-800 group transition-colors duration-300">
-    <div class="self-start text-sm text-gray-500">{{ ucfirst($task->priority) }}</div>
+<div class="flex flex-col bg-white shadow-sm sm:rounded-lg p-6 text-gray-900 space-y-4 bg-white/5 rounded-xl border border-transparent hover:border-blue-800 group transition-colors duration-300">
+    <div class="self-start text-sm text-gray-500">
+        {{ \App\Enums\TaskPriority::from($task->priority)->label() }}
+    </div>
 
     <div class="group">
         <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-800 transition-colors duration-300">

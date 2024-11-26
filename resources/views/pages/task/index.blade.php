@@ -64,7 +64,7 @@
                                                 class="text-blue-600 hover:underline">{{ $task->title }}</a>
                                         </td>
                                         <td class="px-4 py-2 text-sm text-gray-500">
-                                            {{ ucfirst($task->priority) }}
+                                            {{ \App\Enums\TaskPriority::from($task->priority)->label() }}
                                         </td>
                                         <td class="px-4 py-2 text-sm text-gray-500">
                                             {{ $task->start_date }}

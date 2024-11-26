@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Enums\TaskPriority;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,7 +27,7 @@ class TaskFactory extends Factory
             'title' => $this->faker->sentence(4), 
             'description' => $this->faker->paragraph(),
             'start_date' => $this->faker->dateTimeBetween('now', '+2 years')->format('Y-m-d'),
-            'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
+            'priority' => $this->faker->randomElement(TaskPriority::cases())->value,
         ];
     }
 }

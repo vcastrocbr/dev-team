@@ -35,8 +35,16 @@
                         <!-- Genre -->
                         <div>
                             <x-input-label for="genre" :value="__('Genre')" />
-                            <x-text-input id="genre" name="genre" type="text" class="mt-1 block w-full"
-                                :value="old('genre', $music->genre)" />
+                            <select id="genre" name="genre"
+                                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                required>
+                                @foreach ($genres as $value => $label)
+                                    <option value="{{ $value }}"
+                                        {{ old('genre', $music->genre) == $value ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
                             <x-input-error class="mt-2" :messages="$errors->get('genre')" />
                         </div>
 
@@ -69,8 +77,8 @@
 
                         <!-- Submit Button -->
                         <div class="flex items-center gap-4">
-                            <x-primary-button>{{ __('Update Music') }}</x-primary-button>
-                            <x-secondary-button :href="route('musics.index')">{{ __('Back') }}</x-secondary-button>
+                            <x-primary-button>{{ __('Save') }}</x-primary-button>
+                            <x-secondary-button :href="route('musics.show', $music->id)">{{ __('Cancel') }}</x-secondary-button>
                         </div>
                     </form>
                 </div>

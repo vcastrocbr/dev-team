@@ -120,6 +120,6 @@ class TaskController extends Controller
         }
         $task->delete();
 
-        return redirect()->route('pages.tasks.index')->with('success', 'Task deleted successfully');
+        return redirect()->route('tasks.index')->with('success', 'Task deleted successfully');
     }
 }

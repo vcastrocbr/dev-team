@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Models\Music;
+use App\Enums\MusicGenre;
 use Illuminate\Http\Request;
+use App\Http\Requests\MusicStoreRequest;
 
 class MusicController extends Controller
 {
@@ -29,46 +31,44 @@ class MusicController extends Controller
     }
 
 
-    // Show the form for editing the specified music.
-    public function edit(Music $music)
-    {
-        $tags = Tag::all();  // Get all tags for editing
-        return view('pages.music.edit', compact('music', 'tags'));
-    }
-
-
     // Show the form for creating a new music.
     public function create()
     {
         $tags = Tag::all();
-        return view('pages.music.create', compact('tags'));
+        $genres = MusicGenre::options();
+
+        return view('pages.music.create', compact('tags', 'genres'));
+    }
+
+
+    // Show the form for editing the specified music.
+    public function edit(Music $music)
+    {
+        $tags = Tag::all();  // Get all tags for editing
+        $genres = MusicGenre::options();
+
+        return view('pages.music.edit', compact('music', 'tags', 'genres'));
     }
 
 
     // Store a newly created music in the database.
-    public function store(Request $request)
+    public function store(MusicStoreRequest $request)
     {
-        // Validate incoming request data
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'artist' => 'nullable|string|max:255',
-            'genre' => 'nullable|string|max:100',
-            'file_path' => 'required|string|max:255',
+        // Validate the music data
+        $validatedFields = $request->validated();
+
+        // Create a new music entry
+        $music = Music::create($validatedFields);
+
+        // Validate the tags
+        $validatedTags  = $request->validate([
             'tags' => 'array',
             'tags.*' => 'exists:tags,id'
         ]);
 
-        // Create a new music entry
-        $music = Music::create([
-            'title' => $validated['title'],
-            'artist' => $validated['artist'],
-            'genre' => $validated['genre'],
-            'file_path' => $validated['file_path'],
-        ]);
-
-        // Attach selected tags to the music
-        if (isset($validated['tags'])) {
-            $music->tags()->attach($validated['tags']);
+        // Attach tags if provided
+        if (isset($validatedTags['tags']) && !empty($validatedTags['tags'])) {
+            $music->tags()->attach($validatedTags['tags']);
         }
 
         return redirect()->route('musics.index')->with('success', 'Music created successfully');
@@ -76,28 +76,22 @@ class MusicController extends Controller
 
 
     // Update the specified music in the database.
-    public function update(Request $request, Music $music)
+    public function update(MusicStoreRequest $request, Music $music)
     {
-        // Validate incoming request data
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'artist' => 'nullable|string|max:255',
-            'genre' => 'nullable|string|max:100',
-            'file_path' => 'required|string|max:255',
+        // Validate the music data
+        $validatedFields = $request->validated();
+
+        // Update the music details
+        $music->update($validatedFields);
+
+        // Validate the tags
+        $validatedTags  = $request->validate([
             'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id'
         ]);
 
-        // Update the music details
-        $music->update([
-            'title' => $validated['title'],
-            'artist' => $validated['artist'],
-            'genre' => $validated['genre'],
-            'file_path' => $validated['file_path'],
-        ]);
-
         // Sync the selected tags to the music
-        $music->tags()->sync($validated['tags'] ?? []);
+        $music->tags()->sync($validatedTags['tags'] ?? []);
 
         return redirect()->route('musics.index')->with('success', 'Music updated successfully');
     }

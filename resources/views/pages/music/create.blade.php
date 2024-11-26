@@ -34,13 +34,13 @@
                         <!-- Genre -->                        
                         <div>
                             <x-input-label for="genre" :value="__('Genre')" />
-                            <select id="genre" name="genre"
-                                class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                                required>
-                                <option value="low" {{ old('genre') == 'low' ? 'selected' : '' }}>Low</option>
-                                <option value="medium" {{ old('genre') == 'medium' ? 'selected' : '' }}>Medium
-                                </option>
-                                <option value="high" {{ old('genre') == 'high' ? 'selected' : '' }}>High</option>
+                            <select id="genre" name="genre" class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                                @foreach ($genres as $value => $label)
+                                    <option value="{{ $value }}" 
+                                    {{ old('genre') == $value ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('genre')" />
                         </div>

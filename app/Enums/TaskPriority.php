@@ -2,11 +2,11 @@
 
 namespace App\Enums;
 
-enum TaskPriority: string
+enum TaskPriority: int
 {
-    case LOW = 'low';
-    case MEDIUM = 'medium';
-    case HIGH = 'high';
+    case LOW = 100;
+    case MEDIUM = 300;
+    case HIGH = 500;
 
     /**
      * Get the display name for the enum.
@@ -32,6 +32,9 @@ enum TaskPriority: string
         ];
     }
 
+    /**
+     * Custom validation message for invalid enum value.
+     */
     public function messages()
     {
         return [
