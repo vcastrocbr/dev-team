@@ -43,12 +43,12 @@
                         <div>
                             <x-input-label for="priority" :value="__('Priority')" />
                             <select id="priority" name="priority" class="block mt-1 w-full" required>
-                                <option value="low"
-                                    {{ old('priority', $task->priority) == 'low' ? 'selected' : '' }}>Low</option>
-                                <option value="medium"
-                                    {{ old('priority', $task->priority) == 'medium' ? 'selected' : '' }}>Medium</option>
-                                <option value="high"
-                                    {{ old('priority', $task->priority) == 'high' ? 'selected' : '' }}>High</option>
+                                @foreach ($priorities as $value => $label)
+                                    <option value="{{ $value }}"
+                                        {{ old('priority', $task->priority) == $value ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('priority')" />
                         </div>

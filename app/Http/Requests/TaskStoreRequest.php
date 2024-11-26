@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\TaskPriority;
+use Illuminate\Validation\Rules\Enum;
 
 class TaskStoreRequest extends FormRequest
 {
@@ -33,7 +35,7 @@ class TaskStoreRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'start_date' => 'required|date|after_or_equal:today',
-            'priority' => 'required|in:low,medium,high',
+            'priority' => ['required', new Enum(TaskPriority::class)],
             'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }

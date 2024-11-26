@@ -28,12 +28,22 @@ class MusicController extends Controller
         return view('pages.music.show', compact('music'));
     }
 
+
+    // Show the form for editing the specified music.
+    public function edit(Music $music)
+    {
+        $tags = Tag::all();  // Get all tags for editing
+        return view('pages.music.edit', compact('music', 'tags'));
+    }
+
+
     // Show the form for creating a new music.
     public function create()
     {
         $tags = Tag::all();
         return view('pages.music.create', compact('tags'));
     }
+
 
     // Store a newly created music in the database.
     public function store(Request $request)
@@ -61,15 +71,9 @@ class MusicController extends Controller
             $music->tags()->attach($validated['tags']);
         }
 
-        return redirect()->route('pages.musics.index')->with('success', 'Music created successfully');
+        return redirect()->route('musics.index')->with('success', 'Music created successfully');
     }
 
-    // Show the form for editing the specified music.
-    public function edit(Music $music)
-    {
-        $tags = Tag::all();  // Get all tags for editing
-        return view('pages.music.edit', compact('music', 'tags'));
-    }
 
     // Update the specified music in the database.
     public function update(Request $request, Music $music)
@@ -80,7 +84,7 @@ class MusicController extends Controller
             'artist' => 'nullable|string|max:255',
             'genre' => 'nullable|string|max:100',
             'file_path' => 'required|string|max:255',
-            'tags' => 'array',
+            'tags' => 'nullable|array',
             'tags.*' => 'exists:tags,id'
         ]);
 
@@ -93,10 +97,11 @@ class MusicController extends Controller
         ]);
 
         // Sync the selected tags to the music
-        $music->tags()->sync($validated['tags']);
+        $music->tags()->sync($validated['tags'] ?? []);
 
-        return redirect()->route('pages.musics.index')->with('success', 'Music updated successfully');
+        return redirect()->route('musics.index')->with('success', 'Music updated successfully');
     }
+
 
     // Remove the specified music from the database.
     public function destroy(Music $music)

@@ -45,10 +45,12 @@
                             <select id="priority" name="priority"
                                 class="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                                 required>
-                                <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Low</option>
-                                <option value="medium" {{ old('priority') == 'medium' ? 'selected' : '' }}>Medium
-                                </option>
-                                <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>High</option>
+                                @foreach ($priorities as $value => $label)
+                                    <option value="{{ $value }}"
+                                        {{ old('priority') == $value ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
                             </select>
                             <x-input-error class="mt-2" :messages="$errors->get('priority')" />
                         </div>

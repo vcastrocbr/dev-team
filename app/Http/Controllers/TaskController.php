@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Enums\TaskPriority;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,8 @@ class TaskController extends Controller
     // Show Create Form
     public function create()
     {
-        return view('pages.task.create');
+        $priorities = TaskPriority::options();
+        return view('pages.task.create', compact('priorities'));
     }
 
     public function store(TaskStoreRequest $request)
@@ -58,7 +60,7 @@ class TaskController extends Controller
         try {
             // Create the task entry in the database
             Task::create($formFields);
-            return redirect()->route('pages.tasks.index')->with('success', 'Task created successfully!');
+            return redirect()->route('tasks.index')->with('success', 'Task created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating task: ' . $e->getMessage(), ['exception' => $e]);
             return back()->withErrors(['error' => 'An error occurred while creating the task.']);
@@ -68,7 +70,11 @@ class TaskController extends Controller
     // Show Edit Form
     public function edit(Task $task)
     {
-        return view('pages.task.edit', ['task' => $task]);
+        $priorities = TaskPriority::options();
+        return view('pages.task.edit', [
+            'task' => $task,
+            'priorities' => $priorities
+        ]);
     }
 
     // Update Task Data
@@ -98,7 +104,7 @@ class TaskController extends Controller
         $successMessage = 'Task: ' . substr($task->title, 0, 20) . ' updated successfully!';
 
         // Redirect to the tasks.index route with a success message
-        return redirect()->route('pages.tasks.index')->with('success', $successMessage);
+        return redirect()->route('tasks.index')->with('success', $successMessage);
     }
 
     // Delete Task
