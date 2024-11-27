@@ -24,11 +24,13 @@
             </div>
                 <div class="flex gap-4 mt-6">
                     <!-- Edit button -->
+                    @can('update', $music)
                     <a href="{{ route('musics.edit', $music->id) }}"
                         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                         Edit Music
                     </a>
-
+                    @endcan
+                    @can('delete', $music)
                     <!-- Delete form with modal confirmation -->
                     <div x-data="{ open: false }">
                         <!-- Trigger button -->
@@ -62,6 +64,7 @@
                             </div>
                         </div>
                     </div>
+                    @endcan
                 </div>
 
             <!-- Back Button -->

@@ -105,7 +105,6 @@
     @push('scripts')
         <script>
             const tags = {!! $tagsJson !!};
-            console.log('List of existing tags', tags);
         </script>
 
         @vite('resources/js/tag-manager.js')

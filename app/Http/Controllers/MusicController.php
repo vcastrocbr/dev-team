@@ -7,14 +7,16 @@ use App\Models\Music;
 use App\Enums\MusicGenre;
 use Illuminate\Http\Request;
 use App\Http\Requests\MusicStoreRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class MusicController extends Controller
 {
+    use AuthorizesRequests;
+
     // Display a listing of the music.
     public function index()
     {
         $musics = Music::with('tags')->get();
-
 
         return view('pages.music.index', compact('musics'));
     }
@@ -82,6 +84,8 @@ class MusicController extends Controller
     // Update the specified music in the database.
     public function update(MusicStoreRequest $request, Music $music)
     {
+        $this->authorize('update', $music);
+
         // Validate the music data
         $validatedFields = $request->validated();
 
@@ -104,6 +108,8 @@ class MusicController extends Controller
     // Remove the specified music from the database.
     public function destroy(Music $music)
     {
+        $this->authorize('delete', $music);
+        
         // Detach tags before deleting
         $music->tags()->detach();
 
