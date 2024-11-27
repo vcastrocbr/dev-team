@@ -3,7 +3,17 @@
     transition: opacity 0.2s ease-in-out;
 }
 
-/* Show the delete button when the label or delete button is hovered */
+/* Show the delete button when hovered */
 .flex.items-center:hover .delete-tag {
     opacity: 1;
+}
+
+.suggestions-container {
+    max-height: 180px;  
+    overflow-y: auto;  
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(66.66666667% - 20px);
+    font-size: 14px;
+    line-height: 1.1;
 }

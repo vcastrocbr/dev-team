@@ -37,10 +37,14 @@ class MusicController extends Controller
         $tags = Tag::all();
         $genres = MusicGenre::options();
 
-        return view('pages.music.create', compact('tags', 'genres'));
+        // Convert tags to a simple array of names on JSON format
+        $tagsJson = $tags->pluck('name')->toJson();
+
+        // Pass the JSON data to the view
+        return view('pages.music.create', compact('tags', 'genres', 'tagsJson'));
     }
 
-
+    
     // Show the form for editing the specified music.
     public function edit(Music $music)
     {

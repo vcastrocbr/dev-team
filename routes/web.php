@@ -50,9 +50,6 @@ Route::middleware('auth')->group(function () {
     // Tag routes
     Route::post('/tags', [TagController::class, 'store'])->name('tags.store');
     Route::delete('/tags/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
-
-
-
 });
 
 require __DIR__ . '/auth.php';
