@@ -14,21 +14,24 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the tag name
         $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('tags', 'name')->where(function ($query) use ($request) {
-                    return $query->whereRaw('LOWER(name) = ?', [Str::lower($request->name)]);
-                })
-            ],
+            'name' => 'required|string|max:255',
         ]);
+
+        // Normalize the name to have the first letter capitalized (keeping case-sensitive)
+        $normalizedName = ucfirst(Str::lower($request->name));
+
+        // Manually check if a tag with the same name exists (case-sensitive)
+        $existingTag = Tag::where('name', $normalizedName)->first();
+
+        if ($existingTag) {
+            // If tag already exists, return a custom JSON error message
+            return response()->json(['error' => 'Tag name already exists.'], 422);
+        }
 
         // Create the tag
         $tag = Tag::create([
-            'name' => ucfirst($request->name,)
+            'name' => $normalizedName,
         ]);
 
         // Return the new tag as JSON

@@ -16,29 +16,29 @@
                     {{ __('Create New Music') }}
                 </x-primary-button>
             </div>
-
             <!-- Content Section -->
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <!-- Conditional rendering based on viewType -->
-
-                <div>
-                    <!-- Music List -->
-                    <h1 class="font-semibold text-gray-600">Music List</h1>
+                <h1 class="font-bold text-gray-700">Music List</h1>
+                <div class="w-2/3">
                     @if ($musics->isEmpty())
-                        <p>No music found.</p>
+                        <p>No musics found in the database.</p>
                     @else
+                        <div class="mt-6 font-semibold text-gray-600 flex">
+                            <div class="w-1/2">Title</div>
+                            <div class="w-1/2">Artist</div>
+                        </div>
                         <ul class="space-y-2 mt-4">
-                            <li class="flex justify-between items-center font-semibold text-gray-600">
-                                <span class="ml-4">Title</span>
-                                <span class="mr-4">Artist</span>
-                            </li>
                             @foreach ($musics as $music)
-                                <li class="flex justify-between items-center">
-                                    <a href="{{ route('musics.show', $music->id) }}"
-                                        class="text-blue-600 hover:underline">
-                                        {{ $music->title }}
-                                    </a>
-                                    <span>{{ $music->artist }}</span>
+                                <li class="flex">
+                                    <div class="w-1/2">
+                                        <a href="{{ route('musics.show', $music->id) }}"
+                                            class="text-blue-600 hover:underline">
+                                            {{ $music->title }}
+                                        </a>
+                                    </div>
+                                    <div class="w-1/2">
+                                        <span>{{ $music->artist }}</span>
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>
@@ -46,4 +46,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </x-app-layout>

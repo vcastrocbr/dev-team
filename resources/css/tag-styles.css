@@ -1,0 +1,9 @@
+.delete-tag {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Show the delete button when the label or delete button is hovered */
+.flex.items-center:hover .delete-tag {
+    opacity: 1;
+}
