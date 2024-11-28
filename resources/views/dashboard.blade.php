@@ -7,21 +7,23 @@
 
     <div class="py-8" x-data="{ viewType: 'cards' }">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
-            <!-- Task Summary -->
-            <div class="bg-white shadow-sm sm:rounded-lg p-6 font-semibold text-xl text-gray-600 text-left">
-                <a href="{{ route('tasks.index') }}" class="ml-4">
-                    {{ trans_choice('pagination.task_count', Auth::user()->tasks()->count(), ['count' => Auth::user()->tasks()->count()]) }}
-                </a>
+            <div>
+                <!-- Task Summary -->
+                <div class="bg-white shadow-sm sm:rounded-lg p-6 font-semibold text-xl text-gray-600 text-left">
+                    <a href="{{ route('tasks.index') }}" class="ml-4">
+                        {{ trans_choice('pagination.task_count', Auth::user()->tasks()->count(), ['count' => Auth::user()->tasks()->count()]) }}
+                    </a>
+                </div>
+
+                <!-- Music Shortcut -->
+                <div class="bg-white shadow-sm sm:rounded-lg p-6 font-semibold text-xl text-gray-600 text-left">
+                    <a href="{{ route('musics.index') }}" class="ml-4">
+                        {{ __('Navigate to Music Listing') }}
+                    </a>
+                </div>
             </div>
 
-            <!-- Music Summary -->
-            <div class="bg-white shadow-sm sm:rounded-lg p-6 font-semibold text-xl text-gray-600 text-left">
-                <a href="{{ route('musics.index') }}" class="ml-4">
-                    {{ __('Navigate to Music Listing') }}
-                </a>
-            </div>
-
-            <!-- Content Section -->
+            <!-- Show Tasks -->
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <!-- Secondary Button toggle between cards and table view -->
                 <div class="flex justify-end">

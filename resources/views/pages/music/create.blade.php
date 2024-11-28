@@ -55,7 +55,9 @@
                         </div>
 
                         <!-- Tags -->
-                        <div class="p-4 border border-gray-300 rounded-lg">
+
+                        <div class="p-4 border border-gray-300 rounded-lg" id="tags-container"
+                            data-tags='{{ $tagsJson }}'>
                             <div>
                                 <x-input-label for="tags" :value="__('Tags')" />
                                 <div class="grid grid-cols-2 gap-4 mt-2 mx-2 px-2 py-2 overflow-y-auto max-h-32">
@@ -103,10 +105,6 @@
     </div>
 
     @push('scripts')
-        <script>
-            const tags = {!! $tagsJson !!};
-        </script>
-
         @vite('resources/js/tag-manager.js')
     @endpush
 </x-app-layout>

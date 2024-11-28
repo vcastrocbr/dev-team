@@ -32,25 +32,25 @@
                     @if ($musics->isEmpty())
                         <p>No musics found in the database.</p>
                     @else
-                        <div class="mt-6 font-semibold text-gray-600 flex">
-                            <div class="w-1/3">Title</div>
-                            <div class="w-1/3">Artist</div>
-                            <div class="w-1/3">Tags</div>
-                        </div>
+                    <div class="mt-6 font-semibold text-gray-600 grid grid-cols-3 gap-x-4">
+                        <span>Title</span>
+                        <span>Artist</span>
+                        <span>Tags</span>
+                    </div>
                         <ul id="music-list" class="space-y-2 mt-4">
                             @foreach ($musics as $music)
-                                <li class="music-item flex"
+                                <li class="music-item grid grid-cols-3 gap-x-4"
                                     data-tags="{{ $music->tags->isEmpty() ? '' : $music->tags->pluck('name')->join(',') }}">
-                                    <div class="w-1/3">
+                                    <div>
                                         <a href="{{ route('musics.show', $music->id) }}"
                                             class="text-blue-600 hover:underline">
                                             {{ $music->title }}
                                         </a>
                                     </div>
-                                    <div class="w-1/3">
+                                    <div>
                                         <span>{{ $music->artist }}</span>
                                     </div>
-                                    <div class="w-1/3 text-gray-500">
+                                    <div class="text-gray-500">
                                         <small>
                                             @foreach ($music->tags as $tag)
                                                 <span>#{{ $tag->name }}</span>{{ $loop->last ? '' : ', ' }}
@@ -61,6 +61,9 @@
                             @endforeach
                         </ul>
                     @endif
+                </div>
+                <div class="pagination mt-4">
+                    {{ $musics->links() }}
                 </div>
             </div>
         </div>

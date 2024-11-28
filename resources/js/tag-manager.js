@@ -80,7 +80,12 @@ document.addEventListener("click", function (event) {
     }
 });
 
-// Tag Suggestions
+// Handle tag suggestions
+
+// Locate the tags container element and parse the tags JSON from the data-tags attribute
+const tagsContainer = document.getElementById("tags-container");
+const tags = JSON.parse(tagsContainer.dataset.tags);
+
 const createTagInput = document.getElementById("create_tag");
 const suggestionsContainer = document.createElement("div");
 suggestionsContainer.classList.add(
@@ -120,7 +125,7 @@ function filterTags(query) {
 
 // Display the filtered suggestions
 function displaySuggestions(filteredTags) {
-    clearSuggestions(); // Clear any existing suggestions
+    clearSuggestions();
     if (filteredTags.length > 0) {
         filteredTags.forEach((tag) => {
             const suggestionItem = document.createElement("div");
@@ -140,12 +145,11 @@ function displaySuggestions(filteredTags) {
 
 // Select a tag from the suggestions
 function selectTag(tag) {
-    // Set the input value to the selected tag's name
     createTagInput.value = tag;
-    clearSuggestions(); // Clear suggestions once a tag is selected
+    clearSuggestions();
 }
 
 // Clear suggestions
 function clearSuggestions() {
-    suggestionsContainer.innerHTML = ""; // Clear the suggestions container
+    suggestionsContainer.innerHTML = "";
 }

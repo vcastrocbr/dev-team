@@ -16,7 +16,7 @@ class MusicController extends Controller
     // Display a listing of the music.
     public function index()
     {
-        $musics = Music::with('tags')->get();
+        $musics = Music::with('tags')->simplePaginate(12);
 
         return view('pages.music.index', compact('musics'));
     }

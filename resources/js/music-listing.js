@@ -3,8 +3,17 @@ const searchInput = document.getElementById("search");
 const musicList = document.getElementById("music-list");
 const musicItems = musicList.getElementsByClassName("music-item");
 
-// Listen for input events on the search field
-searchInput.addEventListener("input", function () {
+// Debounce function to delay execution
+function debounce(func, delay) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+// Search logic
+function performSearch() {
     const searchQuery = searchInput.value.toLowerCase();
 
     // Loop through each music item
@@ -24,4 +33,7 @@ searchInput.addEventListener("input", function () {
             item.style.display = "none"; // Hide item
         }
     });
-});
+}
+
+// Attach the debounced search function to the input event
+searchInput.addEventListener("input", debounce(performSearch, 300));
